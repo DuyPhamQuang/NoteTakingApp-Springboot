@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:15
+    container_name: NotetakingDB
+    ports:
+      - "8003:5432"
+    volumes:
+      - notetakingspringproject:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - spring-postgres
+
+  backend:
+    build: backend
+    container_name: NotetakingBackendSpring
+    ports:
+      - 8082:8080
+    volumes:
+      - ./backend:/workdir/server
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+    networks:
+      - spring-postgres
+      - spring-vuejs
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dev.Dockerfile
+    container_name: NotetakingFrontendVue
+    ports:
+      - 8090:8080
+    volumes:
+      - ./frontend/vue_app:/vue_app
+      - /frontend/vue_app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - spring-vuejs
+
+networks:
+    spring-postgres:
+      driver: bridge
+    spring-vuejs:
+      driver: bridge
+volumes:
+  notetakingspringproject:
+    external: true
