@@ -80,11 +80,10 @@
     v-model="currentPage"
     :page-count="totalPages"
     :page-range="3"
-    :margin-pages="2"
+    :margin-pages="1"
     :click-handler="clickCallback"
     :prev-text="'Prev'"
     :next-text="'Next'"
-    :first-last-button="true"
     :container-class="'pagination'"
     :page-class="'page-item'"
     >
@@ -125,8 +124,10 @@
           getRequestParams(currentPage, pageSize) {
             let params = {};
 
-            if (currentPage) {
-              params["page"] = currentPage - 1;
+            let page = currentPage - 1;
+
+            if (currentPage >= 0) {
+              params["page"] = page;
             }
 
             if (pageSize) {
@@ -142,11 +143,11 @@
               this.pageSize
             );
 
+
             NoteDataService.getAll(params).then((response) => {
-              const { notes, totalPages, currentPage } = response.data;
+              const { notes, totalPages} = response.data;
               this.notes = notes;
               this.totalPages = totalPages;
-              this.currentPage = currentPage;
             })
           },
 
