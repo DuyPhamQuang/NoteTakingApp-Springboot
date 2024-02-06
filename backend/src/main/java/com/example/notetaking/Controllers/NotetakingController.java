@@ -23,7 +23,7 @@ public class NotetakingController {
 
     @GetMapping("/")
     ResponseEntity<Map<String, Object>> getAllNotes(@RequestParam(defaultValue = "0") int page,
-                                                    @RequestParam(defaultValue = "12") int size) {
+                                                    @RequestParam(defaultValue = "18") int size) {
         try {
             List<Note> notes = new ArrayList<Note>();
             Pageable paging = PageRequest.of(page, size);

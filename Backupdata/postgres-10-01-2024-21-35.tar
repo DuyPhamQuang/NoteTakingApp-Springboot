@@ -1,0 +1,427 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.4 (Debian 15.4-2.pgdg120+1)
+-- Dumped by pg_dump version 15.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.flyway_schema_history (
+    installed_rank integer NOT NULL,
+    version character varying(50),
+    description character varying(200) NOT NULL,
+    type character varying(20) NOT NULL,
+    script character varying(1000) NOT NULL,
+    checksum integer,
+    installed_by character varying(100) NOT NULL,
+    installed_on timestamp without time zone DEFAULT now() NOT NULL,
+    execution_time integer NOT NULL,
+    success boolean NOT NULL
+);
+
+
+ALTER TABLE public.flyway_schema_history OWNER TO postgres;
+
+--
+-- Name: notetaking_category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notetaking_category (
+    id bigint NOT NULL,
+    title character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.notetaking_category OWNER TO postgres;
+
+--
+-- Name: notetaking_category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notetaking_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notetaking_category_id_seq OWNER TO postgres;
+
+--
+-- Name: notetaking_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notetaking_category_id_seq OWNED BY public.notetaking_category.id;
+
+
+--
+-- Name: notetaking_categorynote; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notetaking_categorynote (
+    id bigint NOT NULL,
+    category_id bigint NOT NULL,
+    note_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.notetaking_categorynote OWNER TO postgres;
+
+--
+-- Name: notetaking_categorynote_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notetaking_categorynote_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notetaking_categorynote_id_seq OWNER TO postgres;
+
+--
+-- Name: notetaking_categorynote_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notetaking_categorynote_id_seq OWNED BY public.notetaking_categorynote.id;
+
+
+--
+-- Name: notetaking_note; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notetaking_note (
+    id bigint NOT NULL,
+    content text NOT NULL,
+    createdtime timestamp with time zone NOT NULL,
+    updatedtime timestamp with time zone NOT NULL,
+    deleted boolean DEFAULT false NOT NULL,
+    title character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.notetaking_note OWNER TO postgres;
+
+--
+-- Name: notetaking_note_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notetaking_note_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notetaking_note_id_seq OWNER TO postgres;
+
+--
+-- Name: notetaking_note_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notetaking_note_id_seq OWNED BY public.notetaking_note.id;
+
+
+--
+-- Name: notetaking_category id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_category ALTER COLUMN id SET DEFAULT nextval('public.notetaking_category_id_seq'::regclass);
+
+
+--
+-- Name: notetaking_categorynote id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_categorynote ALTER COLUMN id SET DEFAULT nextval('public.notetaking_categorynote_id_seq'::regclass);
+
+
+--
+-- Name: notetaking_note id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_note ALTER COLUMN id SET DEFAULT nextval('public.notetaking_note_id_seq'::regclass);
+
+
+--
+-- Data for Name: flyway_schema_history; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
+1	1	<< Flyway Baseline >>	BASELINE	<< Flyway Baseline >>	\N	postgres	2023-12-16 10:31:14.464247	0	t
+2	2	alter database	SQL	V2__alter_database.sql	-2016802523	postgres	2023-12-16 10:31:14.856343	5	t
+\.
+
+
+--
+-- Data for Name: notetaking_category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.notetaking_category (id, title) FROM stdin;
+1	Ops-IT
+2	test1
+3	test2
+4	test3
+5	test4
+\.
+
+
+--
+-- Data for Name: notetaking_categorynote; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.notetaking_categorynote (id, category_id, note_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notetaking_note; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.notetaking_note (id, content, createdtime, updatedtime, deleted, title) FROM stdin;
+390	test123	2023-12-31 15:06:59.932597+00	2023-12-31 15:06:59.93265+00	t	test123
+405	der Autorennfahrer: race-car driver	2024-01-04 02:54:08.272464+00	2024-01-04 02:54:08.272653+00	f	Deutsche Wortschatz
+406	durchfallen: fail\n(bei einer Prüfung durchfallen: fail an examination)\n\nEr war sicher, bei der Prüfung durchgefallen zu sein, aber das Gegenteil traf zu.\nIch machte die Prüfung trotz meiner Angst, durchzufallen.\nDie Tochter Herrn Pichels, eines berühmten Autorennfahrers, fiel drei Mal durch die Führerscheinprüfung.	2024-01-04 02:57:51.531813+00	2024-01-04 02:57:51.531832+00	f	Deutsche Wortschatz
+413	entsenden: send, dispatch\n\nDie Agentur hat den Kurier vor zwei Stunden entsandt.\nUnser Unternehmen war das erste in unserem Land, das Frauen als Au Pair in andere Länder entsandte, und heute gehören wir zu den weltweit führenden Unternehmen in diesem Bereich.	2024-01-05 03:47:12.199651+00	2024-01-05 03:47:12.199689+00	f	Deutsche Wortschatz
+270	abschalten: switch off, turn off, shut off, shut down, disable	2023-09-09 12:12:13.722333+00	2023-09-09 12:12:13.72235+00	f	Deutsche Wortschatz
+272	der Atomausstieg: withdrawal from the nuclear energy programme, nuclear phaseout\n\n* Der Atomausstieg löst nicht die Frage, was mit radioaktiven Abfällen passiert.	2023-09-10 11:26:57.235774+00	2023-09-10 11:26:57.23579+00	f	Deutsche Wortschatz
+268	aus dem Rennen sein: out of the running\n\n-  Lange galt Gorleben als möglicher Standort und wurde zum Symbol des Kampfes gegen Kernkraft – jetzt ist der Ort aus dem Rennen.\n\n-  Etwa ein Viertel der Starter schied vor dem Erreichen des Ziels aus dem Rennen aus.\n\n-  Sie absolvierte das Gymnasium gut, also gab es hier kein Problem, aber jetzt wurde sie aus dem Rennen geworfen.	2023-09-09 11:14:47.69067+00	2023-09-10 11:40:10.576877+00	f	Deutsche Wortschatz
+326	die Selbständige: the self-employed	2023-09-29 14:30:33.938693+00	2023-09-29 14:30:33.938708+00	f	Deutsche Wortschatz
+312	die Zeitfrist: time limit, time period	2023-09-29 10:09:50.89729+00	2023-09-29 10:09:50.897308+00	f	Deutsche Wortschatz
+407	die Führerscheinprüfung: driving test	2024-01-04 02:59:26.15305+00	2024-01-04 02:59:26.153067+00	f	Deutsche Wortschatz
+292	anfahren: run into sb, hit sb\n\nDas Auto hat mich angefahren.\n\nDie Frau wurde angefahren. Sie ist verletzt.	2023-09-28 04:57:38.486996+00	2023-09-28 04:57:38.489378+00	f	Deutsche Wortschatz
+414	überheblich = sich selbst überschätzend	2024-01-06 03:16:49.139793+00	2024-01-06 03:16:49.141835+00	f	Deutsche Wortschatz
+328	verdauen: digest\n\nIch finde es schwierig, Kritik zu verdauen.\n\nEin Salat ist leicht zu verdauen.	2023-09-29 14:38:34.246876+00	2023-09-29 14:38:34.246891+00	f	Deutsche Wortschatz
+346	Every instance of a running PostgreSQL server manages one or more databases. \n\nA database is a named collection of SQL objects ("database objects"). Generally, every database object (tables, functions, etc.) belongs to one and only one database. (But there are a few system catalogs, for example pg_database, that belong to a whole cluster and are accessible from each database within the cluster.) More accurately, a database is a collection of schemas and the schemas contain the tables, functions, etc. So the full hierarchy is: server, database, schema, table (or some other kind of object, such as a function).\n\nWhen connecting to the database server, a client must specify in its connection request the name of the database it wants to connect to. It is not possible to access more than one database per connection. (But an application is not restricted in the number of connections it opens to the same or other databases.) Databases are physically separated and access control is managed at the connection level. If one PostgreSQL server instance is to house projects or users that should be separate and for the most part unaware of each other, it is therefore recommendable to put them into separate databases. If the projects or users are interrelated and should be able to use each other's resources they should be put in the same database, but possibly into separate schemas. Schemas are a purely logical structure and who can access what is managed by the privilege system.	2023-10-24 03:50:07.890848+00	2023-10-24 03:50:07.890864+00	f	Managing database (postgresql)
+317	zur Verfügung stellen: make available, produce, allocate\n\nAllerdings wandelt sich auch die Arbeit im Waren- und Dienstleistungssektor. Das Schlagwort lautet „Plattformökonomie“. Anbieter und Suchende von Waren und Dienstleistungen finden sich im Internet auf einer von einem Dritten zur Verfügung gestellten sogenannten Plattform.\n\nAlles, was die Kinder beim Schulausflug brauchen, wird von der Schule zur Verfügung gestellt.\n\nDas Unternehmen stellte der Öffentlichkeit seine Dokumente zur Verfügung.\n\nDas Unternehmen stellte der Öffentlichkeit seine Dokumente zur Verfügung.\n\nDie Universität stellte Computer für jeden Kursteilnehmer zur Verfügung.	2023-09-29 10:56:42.632699+00	2023-09-29 10:56:42.632714+00	f	Deutsche Wortschatz
+314	der Bruchteil: fraction, small part\n\nDer Junge hat nur einen Bruchteil der ganzen Geschichte erzählt.	2023-09-29 10:25:19.545092+00	2023-09-29 10:25:19.545107+00	f	Deutsche Wortschatz
+288	etw.(Akk) an jdn./etw.(Akk) anpassen: adapt to sth, suit to sth\n\nSie meint, dass die Gesetze an die sich verändernde Arbeitswelt angepasst werden müssen.\n\nNach dem Umzug musste sich die Familie an ihre neue Umgebung anpassen.\n\nEr passte sein Hobby an seine Arbeitszeit an.	2023-09-26 11:28:39.859755+00	2023-09-26 11:28:39.859801+00	f	Deutsche Wortschatz
+358	It’s good practice to use the most restrictive access level possible for any given member to prevent misuse. We should always use the private access modifier unless there is a good reason not to.\n\nPublic access level should only be used if a member is part of an API.	2023-11-22 04:09:57.242805+00	2023-11-22 04:09:57.24282+00	f	Note about using access modifiers in Java
+349	kubectl config set-context --current --namespace=[]	2023-10-27 02:56:58.093479+00	2023-10-27 02:56:58.093502+00	f	set current namespace Kubernetes
+347	kubectl create secret docker-registry my-registry-secret --docker-server=docker.io --docker-username=[] --docker-password=[] --docker-email=[]	2023-10-26 10:38:27.455012+00	2023-10-27 02:57:48.503927+00	f	Kubernetes - Pull images from private registry Dockerhub
+351	Kubernetes by default STORES DATA in the CURRENT NODE that HOST the POD if developer does not CONFIG anything.	2023-10-28 12:02:04.527529+00	2023-10-28 12:02:04.527567+00	f	Note about Kubernetes storage
+415	wew	2024-01-06 03:17:05.792741+00	2024-01-06 03:17:05.792759+00	t	dd
+416	über jemandem herziehen = über jemandem schlecht reden.\n\nIm Vorstellungsgespräch solltest du niemals über deinen ehemaligen Arbeitgeber herziehen.	2024-01-06 03:20:19.789864+00	2024-01-06 03:20:19.789887+00	f	Deutsche Wortschatz
+391	das Triebwerk: engine, power unit\n\nDas Flugzeug hatte ein starkes Triebwerk.	2024-01-01 04:24:46.557223+00	2024-01-01 04:24:46.557931+00	f	Deutsche Wortschatz
+285	genannt: called, stated, cited\n\nEr kann die in einer US-Arbeitsmarkstudie genannten Zahlen voll und ganz bestätigen.(cited)\n\nDer genannte Preis enthält alle Steuern und Gebühren.	2023-09-26 11:10:09.850024+00	2023-09-26 11:10:09.850041+00	f	Deutsche Wortschatz
+287	die Gastronomie: catering, food service\n\nIn der Gastronimie braucht man weiterhin viele menschliche Arbeitskräfte.\n\nMein Lebensgefährte arbeitet in der Gastronomie als Koch.	2023-09-26 11:21:42.85042+00	2023-09-26 11:21:42.850434+00	f	Deutsche Wortschatz
+269	die Kernkraft: nuclear power	2023-09-09 11:54:10.787509+00	2023-09-09 11:54:10.787531+00	f	Deutsche Wortschatz
+271	das Bergwerk: mine\n\n* Kohle wird in Bergwerken gefördert.\n\n* Ein Bergwerk wird gebaut, um Kohle oder andere Stoffe zu gewinnen.	2023-09-10 11:24:57.62933+00	2023-09-10 11:24:57.629351+00	f	Deutsche Wortschatz
+279	ein Treffen verabreden: to hold a meeting	2023-09-23 03:47:37.681592+00	2023-09-23 03:47:37.681606+00	f	Deutsche Wortschatz
+273	zerfallen: disintergrate, fall apart, decay\n\n* Gebäude zerfallen ohne richtige Wartung.\n\n* Das Gebäude ist so alt, dass es allmählich zerfällt.\n\n* Die Verbindung zerfiel in ihre Einzelteile.\n\n* Atommüll braucht Millionen von Jahren, um zu zerfallen.	2023-09-10 11:29:25.605464+00	2023-09-10 11:29:25.60548+00	f	Deutsche Wortschatz
+289	die Gewerkschaft: union, trade union, labor union\n\nGewerkschaften wurden gegründet, um die Interessen der Arbeitskräfte zu vertreten.\n\nMein Kollege ist ein Mitglied der Gewerkschaft.\n\nEr ist überzeugt, dass die Gewerkschaften heutzutage völlig unnötig sind.	2023-09-26 11:37:57.636663+00	2023-09-26 11:37:57.636676+00	f	Deutsche Wortschatz
+275	Nominativ:  Chủ ngữ trong câu nên còn gọi là chủ cách. Trả lời cho câu hỏi "Wer?" và "Was?"\n\nArtikel:\n\n* Definitiv: Singular -e, Plural: -en\n\n* Indefinitiv und Possesiv Artikel: mein -er (M), meine -e (F), mein -es (N), meine -en (P)\n\n* Kein Artikel: -er (M), -e (F), -es (N), -e (P)	2023-09-10 16:09:52.580952+00	2023-09-10 16:14:56.512467+00	f	Biến cách: Nominativ
+291	Follow the link: https://dshnotes.com/index.php/\n2017/01/25/partizipialattribute-und-relativsatze-umformung/	2023-09-28 04:06:09.407388+00	2023-09-29 11:10:37.016762+00	f	Partizipialattribute-und-Relativsatze-Umformung
+392	der Treibstoff, Kraftstoff: fuel\n\nFlugzeuge verwenden meist Kerosin als Treibstoff.	2024-01-01 04:28:29.664011+00	2024-01-01 04:28:29.664028+00	f	Deutsche Wortschatz
+356	https://www.baeldung.com/spring-bean	2023-11-04 11:35:09.932556+00	2023-11-04 11:35:09.93257+00	f	Spring bean/Spring IOC container
+393	fasdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffsortingasfdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd	2024-01-01 04:37:35.05836+00	2024-01-01 04:38:09.929847+00	t	123 teast
+408	Wie kann man "lassen" verwenden?\n\nhttps://www.youtube.com/watch?v=Ree_YclSVTE	2024-01-04 08:54:06.408634+00	2024-01-04 08:54:06.408661+00	f	Deutsche Grammatik
+355	https://www.tutorialspoint.com/spring/\nspring_web_mvc_framework.htm	2023-11-04 03:28:28.088442+00	2023-11-04 03:40:11.746325+00	f	SPRING MVC architecture
+332	betreiben: pursue, conduct, operate\n\nDiese Maschine sollte nur unter Aufsicht betrieben werden.\n\nDie Regierung betreibt eine familienfreundliche Politik.\n\nViel Handel wurde vor einem Jahrhundert in dieser Stadt betrieben.\n\nIch bin die Inhaberin und betreibe das Geschäft selbst.\n\nIch bin die Inhaberin und betreibe das Geschäft selbst.	2023-09-29 14:53:16.935656+00	2023-09-29 14:53:16.935671+00	f	Deutsche Wortschatz
+333	unternehmen: undertake, do\n\nLaut Oliver Suchy müssen noch größere Anstrengungen unternommen werden.\n\nIch möchte eine Reise um die Welt unternehmen.\n\nMein Freund und ich planen, was wir am Wochenende unternehmen wollen.	2023-09-29 14:55:59.291249+00	2023-09-29 14:55:59.291264+00	f	Deutsche Wortschatz
+336	- Add search bar\n\n- Add personal wiki feature -> Search meaning of the word either on Internet or in this web app\n\n- Extract words or texts or images from online documents, subtitles in youtube video or from physical papers\n\n- Content of note can hold images and maybe codes\n\n- Add priority tagging features -> Tagged notes should always get pinned on first positions of first pages.\n\n- Finish Category module	2023-10-01 03:07:06.312395+00	2023-10-01 03:11:41.917273+00	f	Improving notetaking app
+339	ab/von ... an, aus, außer, bei, entgegen, gegenüber, mit, nach, seit, von, zu	2023-10-05 10:31:42.949316+00	2023-10-05 10:31:42.949332+00	f	Präpositionen mit Dativ
+340	* Ortsangabe:\nWohin: Akkusativ,\nWo: Dativ\n\n* Verben mit auf + Akk:\nachten auf, ankommen auf, anspielen auf, aufpassen auf, sich berufen auf, sich beschränken auf, sich beziehen auf, jemanden bringen auf, drängen auf, sich einlassen auf, sich einstellen auf, sich freuen auf, hinweisen auf, hoffen auf, hören auf, sich konzentrieren auf, reagieren auf, schimpfen auf, sinken auf, steigen auf, sich verlassen auf, vertrauen auf, verzichten auf, sich vorbereiten auf, warten auf, zurückkommen auf.\n\n* Verben mit auf + Dativ:\nbasieren auf, beharren auf, beruhen auf, bestehen auf.	2023-10-05 10:40:00.228243+00	2023-10-05 10:40:00.228258+00	f	Präposition auf: Akkusativ und Dativ
+294	* Vorgangpassiv:\n\n Präsens: werden + P2\n\nPräteritum: wurden + P2\n\nPerfekt: sein + P2 + worden\n\nPlusquamperfekt: waren  + P2 + worden\n\nFutur1: werden + P2 + werden\n\nMit Modalverben: Modalverb + P2 + werden\n\n########################\n\n* Zustandpassiv:\n\nPräsens: sein + P2\n\nVergangenheit: waren + P2\n\nFutur: werden + P2 + sein\n\nMit Modalverben: Modalverb + P2 + sein	2023-09-28 05:23:56.657062+00	2023-10-08 16:44:28.270152+00	f	Passiv(Vorgangpassiv und Zustandpassiv)
+417	jdn./etw.Akk gerne haben: be fond of sb/sth, like sth/sb\n\nIm Vorstellungsgespräch möchte man zum einen herausfinden, ob du längerfristig planst oder ob du diese Stelle als eine Art Übergangslösung siehst. Das hat niemand besonders gerne.	2024-01-06 03:44:39.38215+00	2024-01-06 03:49:38.117395+00	f	Deutsche Wortschatz
+341	https://www.suse.com/c/introduction-k3d-run-k3s-docker-src/	2023-10-10 11:06:11.453586+00	2023-10-10 11:06:11.453632+00	f	k3d tutorial
+265	Learning Management System with Java	2023-09-09 10:23:46.691497+00	2023-10-19 04:15:52.28203+00	f	Ideas for projects
+394	betanken: refuel	2024-01-02 11:52:04.601291+00	2024-01-02 11:52:04.603674+00	f	Deutsche Wortschatz
+409	erlangen:obtain, gain, acquire\n\nEr erlangte einen gewissen Grad an Berühmtheit durch seine Show.\nMit dem Alter erlangen die Menschen meist Weisheit.\nEr erlangte die Position des Verkaufsleiters, kurz nachdem er in der Firma angefangen hatte.\n	2024-01-04 10:10:40.51808+00	2024-01-04 10:10:40.518153+00	f	Deutsche Wortschatz
+418	in den Ruhestand gehen: retire\n\nGehen Chefs von Familienunternehmen in den Ruhestand, stellt sich die Frage, wer den Betrieb weiterführt. Anders als früher spielt das Geschlecht bei der Entscheidung inzwischen kaum mehr eine Rolle.	2024-01-10 11:46:33.9737+00	2024-01-10 11:46:33.976065+00	f	Deutsche Wortschatz
+342	kubectl delete all --all -n [namespace]	2023-10-10 11:59:13.372563+00	2023-10-10 11:59:13.373299+00	f	Delete all resource in 1 specific namespace k8s
+343	kubectl delete all --all --dry-run	2023-10-10 12:01:56.842505+00	2023-10-10 12:01:56.842521+00	f	foresee resources that will be deleted before actually deleting them k8s
+344	k3d node edit [Name of node] --port-add [HOST:][HOSTPORT:]\nCONTAINERPORT[/PROTOCOL][@NODEFILTER]\n\nEx: k3d node edit k3d-mycluster-serverlb --port-add 30000-31000:30000-31000	2023-10-17 03:15:09.845389+00	2023-10-20 03:14:08.268812+00	f	Add port to k3d cluster node
+345	kubectl scale deploy [deployname] \n--replicas=[number] -n [namespace]	2023-10-22 10:40:13.508023+00	2023-10-22 10:40:22.651724+00	f	scale pods kubernetes
+274	die Kernkraftnutzung: nuclear power use\n\n* Ein Endlager muss den Müll aus über 60 Jahren Kernkraftnutzung aufnehmen.	2023-09-10 11:34:43.339538+00	2023-09-23 03:45:44.012162+00	f	Deutsche Wortschatz
+318	der Dritter: third party / die Dritte: third parties\n\nAllerdings wandelt sich auch die Arbeit im Waren- und Dienstleistungssektor. Das Schlagwort lautet „Plattformökonomie“. Anbieter und Suchende von Waren und Dienstleistungen finden sich im Internet auf einer von einem Dritten zur Verfügung gestellten sogenannten Plattform.\n\nIch bevorzuge Direktgeschäfte, ohne einen Dritten einzuschalten.\n\nKeine der Parteien darf ihre Rechte an Dritte abtreten.	2023-09-29 10:58:55.78996+00	2023-09-29 10:58:55.789975+00	f	Deutsche Wortschatz
+320	infrage stellen: question sth, challenge sth\n\nIch habe seine Entscheidung nicht infrage gestellt und getan, was er wollte.\n\nMeine neue Theorie stellt die traditionellen Ideen infrage.	2023-09-29 11:19:05.202285+00	2023-09-29 11:19:05.202299+00	f	Deutsche Wortschatz
+322	das Gewerberecht: trade law, commercial law	2023-09-29 11:27:03.874153+00	2023-09-29 11:27:03.874167+00	f	Deutsche Wortschatz
+327	umstellen: change, adapt, adjust to\n\nGewerkschaften werden in dieser Welt entweder gar nicht mehr gebraucht oder müssen ihr Profil komplett umstellen.\n\nGewerkschaften, die traditionell für die Rechte angestellter Arbeitnehmerinnen und Arbeitnehmer kämpfen und nicht für die Selbstständiger, müssen sich verändern, ihr Profil umstellen	2023-09-29 14:34:51.989045+00	2023-09-29 14:39:30.567428+00	f	Deutsche Wortschatz
+329	sich unterscheiden: vary, differ\n\nBenzinpreise unterscheiden sich von Land zu Land.	2023-09-29 14:41:02.553565+00	2023-09-29 14:41:02.553582+00	f	Deutsche Wortschatz
+323	sich an etw(Akk) halten: comply with, adhere to, abide by\n\nDie Schüler versprachen, sich an die Regeln zu halten.\n\nEr hielt sich an die Regeln und wurde belohnt.\n\nFirmen und Beschäftigte müssen sich in Deutschland an viele Gesetze halten, darunter das Arbeits-, das Gewerbe- und das Steuerrecht.	2023-09-29 11:31:51.269994+00	2023-09-29 14:25:06.901649+00	f	Deutsche Wortschatz
+325	entstehen: arise, emerge, occur	2023-09-29 14:28:46.068083+00	2023-09-29 14:28:46.068098+00	f	Deutsche Wortschatz
+282	sich verändernd: changing\n\nWie wir auf die sich verändernde Arbeitswelt reagieren, hängt nicht zuletzt auch von uns selbst ab.\n\nDịch: Cách chúng ta phản ứng với sự thay đổi liên tục của môi trường làm việc, phụ thuộc không nhỏ (NICHT ZULETZT) vào bản thân chúng ta (UNS SELBST).	2023-09-25 03:56:19.822997+00	2023-09-26 09:56:16.823211+00	f	Deutsche Wortschatz
+357	die Zahlung tätigen: make payment\n\nIch sende Ihnen die Gebührenrechnung zu, damit Sie die Zahlung tätgigen können.	2023-11-22 02:40:13.032051+00	2023-11-22 02:40:13.032069+00	f	Deutsche Wortschatz
+352	https://www.baeldung.com/cs/private-vs-protected-access-modifiers\n\nEx: You can specify which methods you want to expose (through access modifiers) and which you don’t. Doing things like that will prevent other methods in the code from accidentally OVERRIDING the data or CHANGING it. An example of this is creating an online banking program, when you create a method to make deposits, you will specify the access modifier from the balance method that allows input of a dollar amount (ie say a deposit of 100 dollars), but you don’t want the deposit method to go and actually UPDATE the total balance of the account, you just want to get the dollar value, so you only expose the specific input from balance method that allows the dollar amount of deposit be specified. The input amount is then processed within the balance method BEOFRE it can actually CHANGE the total balance of the account.	2023-10-30 03:57:13.091367+00	2023-10-30 03:57:13.091389+00	f	private vs protected access modifier
+395	umwandeln: convert, transform\n\nDie Zellen wandeln Glukose in Energie um.\nPflanzen wandeln Sonnenenergie in Zucker um.\nEine Brennstoffzelle wandelt den Wasserstoff in elektrische Energie um, um sie für den Motor nutzbar zu machen.	2024-01-03 03:01:27.214902+00	2024-01-03 03:01:27.214925+00	f	Deutsche Wortschatz
+396	bisher: so far, up to now, as yet\n\nDas bisher größte Problem von Flugzeugen ist nämlich, dass für die klassischen Verbrennungstriebwerke Kerosin eingesetzt werden muss.\nBisher hat unsere Mannschaft alle Spiele gewonnen.\nBisher hat unsere Mannschaft alle Spiele gewonnen.\nDie Aufgaben wurden bisher nicht erledigt.	2024-01-03 03:07:50.670566+00	2024-01-03 03:07:50.670584+00	f	Deutsche Wortschatz
+397	klimaschädlich: climate-damaging\n\nDas bisher größte Problem von Flugzeugen ist nämlich, dass für die klassischen Verbrennungstriebwerke Kerosin eingesetzt werden muss. Bei der Verbrennung entstehen klimaschädliche Abgase.	2024-01-03 03:08:49.057732+00	2024-01-03 03:08:49.057754+00	f	Deutsche Wortschatz
+410	kontrollieren: check, monitor, inspect\n\nDer PKW-Fahrer kam dem Grenzbeamten verdächtig vor, aus diesem Grund kontrollierte er dessen Papiere besonders gründlich.\nMein Chef kontrolliert den Fortschritt meiner Arbeit.\nDie Maschinen werden von Experten kontrolliert.	2024-01-04 10:40:24.85958+00	2024-01-04 10:40:24.859636+00	f	Deutsche Wortschatz
+208	pip3 install django-extensionssetting.py -> Installed App: 'django_extensions'\n\nIn the same directory that contain manage.py: mkdir scripts\n\n-> Start create script files (.py)(csvs file can be anywhere in the project)\n\n* Runscript: python manage.py runscript "script file name"	2023-09-06 03:45:58.134551+00	2023-09-09 03:17:00.886564+00	f	Django load data batch from csv file to database
+398	davon ausgehen: assume, assume that\n\nIch müsste davon ausgehen können, dass es schon gut getestet ist, so dass ich darauf vertrauen kann. \nEr muss davon ausgehen, dass die Produkte entsprechend den gesetzlichen Vorschriften hergestellt sind.\nAls Ziel für einen breiten Einsatz der Technologie peilen Ingenieure das Jahr 2040 an. Sie gehen sogar davon aus, dass in Zukunft Transatlantikflüge möglich sind.	2024-01-03 04:16:41.127672+00	2024-01-03 04:16:41.127722+00	f	Deutsche Wortschatz
+399	auf etwas hinarbeiten: work toward sth\n\nDer eifrige junge Mann arbeitet auf eine erfolgreiche Karriere hin.\nLange haben die Ingenieure auf den Erstflug ihres Flugzeugs hingearbeitet.	2024-01-03 04:21:53.77167+00	2024-01-03 04:21:53.77169+00	f	Deutsche Wortschatz
+411	baden gehen: go swimming, go for a swim\n\ndie Beiden brausten zum nächsten See los, um baden zu gehen.	2024-01-04 10:44:28.568315+00	2024-01-04 10:44:28.568483+00	f	Deutsche Wortschatz
+316	das Gesundheitswesen: healthcare\n\nPrävention ist ein wesentliches Element des Gesundheitswesens.	2023-09-29 10:51:21.658533+00	2023-09-29 10:51:21.658548+00	f	Deutsche Wortschatz
+334	sich jdm./etw(Dat) stellen: confront sb/sth\n\nWer sich weiterbildet, sich den Herausforderungen der neuen Arbeitswelt stellt, wird bessere Chancen auf dem Arbeitsmarkt haben	2023-09-29 14:58:25.722887+00	2023-09-29 14:58:25.722902+00	f	Deutsche Wortschatz
+335	Building advanced chat application with java - spring MVC	2023-10-01 02:59:20.637786+00	2023-10-01 02:59:20.637801+00	f	Project Ideas - Java
+337	bis, durch, entlang, für, gegen, ohne, um.	2023-10-05 10:13:54.478108+00	2023-10-05 10:14:10.91496+00	f	Präpositionen mit Akkusativ
+267	lagern: store, warehouse sth\n\n* Seit über 40 Jahren diskutiert man in Deutschland, wo Atommüll gelagert werden soll.	2023-09-09 11:09:30.203156+00	2023-09-09 11:12:45.2061+00	f	Deutsche Wortschatz
+283	unterkommen: find accomodation, Aufnahme finden\n\nEs gibt nur noch die Möglichkeit, in einem privaten Wohnheim unterzukommen.\n\nbei Freunden, in einer Pension unterkommen	2023-09-26 02:58:44.176674+00	2023-09-26 02:58:44.178749+00	f	Deutsche Wortschatz
+295	zurückgehen: go back, fall, decrease, decline	2023-09-28 11:36:30.356816+00	2023-09-28 11:36:30.359366+00	f	Deutsche Wortschatz
+353	https://www.w3schools.blog/maven-architecture-diagram	2023-11-03 04:04:48.071241+00	2023-11-03 04:04:48.071262+00	f	MAVEN architecture
+359	External Volume: textextractionproject\n\ndocker run -itd --name TextExDB2 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -p 5434:5432 -v textextractionproject:/var/lib/postgresql/data postgres:15	2023-11-25 02:41:23.217043+00	2023-11-25 02:41:23.217198+00	f	Start postgresql with docker run
+290	das Märchen(singular and plural): fairy tale(s)\n\nSelbstfahrende Autos. Teilautonom, also nicht mehr von Menschen gesteuerte Maschinen. Auto- und Flugzeugteile, die nicht mehr von Menschen gefertigt werden, sondern aus dem 3D-Drucker kommen. Das ist kein Zukunftsmärchen, keine Utopie, sondern bereits Realität.	2023-09-28 04:04:12.800113+00	2023-09-28 04:04:12.802652+00	f	Deutsche Wortschatz
+354	https://www.geeksforgeeks.org/spring-boot-architecture/	2023-11-04 03:28:00.977924+00	2023-11-04 03:28:00.977937+00	f	SPRING BOOT architecture
+313	ergeben: yield\n\nEine Studie der Organisation für Wirtschaftliche Zusammenarbeit OECD aus dem Jahr 2016 ergab, dass in den von ihr untersuchten 21 Ländern nur ein Bruchteil der Jobs von Maschinen übernommen werden könnten – nämlich nur neun Prozent.\n\nDie Kürzungen ergeben Kostenersparnisse.	2023-09-29 10:14:23.105362+00	2023-09-29 10:18:10.268094+00	f	Deutsche Wortschatz
+280	Example: get parameter "page" from url\n\n const queryString = window.location.search;\n\n const urlParams = new URLSearchParams(queryString);\n\n const page = urlParams.get('page')	2023-09-24 12:30:45.410267+00	2023-09-24 12:32:04.212461+00	f	Get value from URL javascript
+400	bereitstellen: provide, supply, allocate\n\nDer Wasserstoff stellt die elektrische Energie für den Motor bereit.\nDie Schule wird alles Notwendige für den Ausflug bereitstellen.\nDie Firma wird die Ausrüstung für das Projekt bereitstellen.\nDie Abteilung hat etwas Geld für die jährliche Konferenz bereitgestellt.\n	2024-01-03 11:49:55.51174+00	2024-01-03 11:49:55.511874+00	f	Deutsche Wortschatz
+401	umrüsten: convert, modify\n\nDer Techniker hat die Maschine für die neue Produktionslinie umgerüstet.\nIn Zukunft müssen die Flugzeuge großer Unternehmen umgerüstet werden. Als Ziel für einen breiten Einsatz der Technologie peilen Ingenieure das Jahr 2040 an.	2024-01-03 11:55:09.334936+00	2024-01-03 11:55:09.334985+00	f	Deutsche Wortschatzt
+402	der Einsatz: use, usage\n(breiter Einsatz: broad development, widespread use)\n\nIn Zukunft müssen die Flugzeuge großer Unternehmen umgerüstet werden. Als Ziel für einen breiten Einsatz der Technologie peilen Ingenieure das Jahr 2040 an.\nReinigen Sie das Gerät nach jedem Einsatz.\nDer richtige Einsatz dieses Produktes erfordert Übung.\n	2024-01-03 11:59:14.557155+00	2024-01-03 11:59:14.557177+00	f	Deutsche Wortschatz
+403	anpeilen: aim\n\nls Ziel für einen breiten Einsatz der Technologie peilen Ingenieure das Jahr 2040 an.	2024-01-03 12:00:29.144123+00	2024-01-03 12:06:45.369687+00	f	Deutsche Wortschatz
+404	jemandem schwerfallen: be difficult for sb\n\nDie Prüfung ist mir schwergefallen.	2024-01-03 12:08:29.115748+00	2024-01-03 12:08:29.115775+00	f	Deutsche Wortschatz
+412	zubereiten: prepare, cook\n\nIch bereite jeden Tag eine frische Mahlzeit zu.\nIch weiß, wie man Gemüsesuppe zubereitet.\nIch kann sowohl gut kochen als auch leckere Desserts zubereiten. Kochen ist meine Leidenschaft.	2024-01-05 03:16:31.529696+00	2024-01-05 03:16:31.529902+00	f	Deutsche Wortschatz
+281	künftig: future, in the future\n\nFirmen dürfen Rückstellungen für künftige Investitionen bilden.\n\nDie neue Bestimmung soll künftig für alle Mitglieder gelten.	2023-09-25 03:43:24.450588+00	2023-09-25 03:43:24.451064+00	f	Deutsche Wortschatz
+319	die Übernachtungsmöglichkeit/-en: accomodation\n\nHostels bieten normalerweise eine günstige Übernachtungsmöglichkeit.\n\nAirbnb ist der weltweit größte Anbieter von privaten Übernachtungsmöglichkeiten.	2023-09-29 11:08:26.975829+00	2023-09-29 11:08:26.975844+00	f	Deutsche Wortschatz
+315	die Tätigkeit: activity, occupation\n\nAuch sind manche Wirtschaftsbereiche stärker betroffen als andere. Einfache industrielle Produktionstätigkeiten werden laut der Studie wegen Automatisierung ebenso verschwinden wie Bürotätigkeiten, zum Beispiel in Banken, Verwaltungen und Versicherungen.\n\nUnsere Recherche zeigt, dass Fahrradfahren eine gesunde Tätigkeit ist.\n\nMeine Fähigkeiten erlaubten es mir, eine bessere Tätigkeit zu finden.	2023-09-29 10:40:00.966961+00	2023-09-29 10:40:00.966977+00	f	Deutsche Wortschatz
+311	veloren gehen: be lost, get lost\n\nMillionen Arbeitsplätze könnten wegen Automatisierung verloren gehen.	2023-09-29 03:37:14.686254+00	2023-09-29 03:37:14.686273+00	f	Deutsche Wortschatz
+321	allegedly, supposedly: angeblich\n\nAngeblich findet die neue App die besten Flugpreise.	2023-09-29 11:25:41.644223+00	2023-09-29 11:25:41.644237+00	f	Deutsche Wortschatz
+324	sich nach etw(Dat) richten: comply with, conform to	2023-09-29 14:26:31.632225+00	2023-09-29 14:26:31.632239+00	f	Deutsche Wortschatz
+330	plädieren: sich für etwas plädieren\n\n- für jemandes Beförderung plädieren.\n\n- Damit wir die Folgen des Wandels in der Arbeitswelt gut bewältigen, plädieren Experten wie Oliver Suchy und Gerhard Braun dafür, die Weiterbildung nicht außer Acht zu lassen, eine „investive Arbeitsmarktpolitik“ zu betreiben.	2023-09-29 14:49:46.907726+00	2023-09-29 14:49:56.265554+00	f	Deutsche Wortschatz
+331	außer Acht lassen: disregard, neglect\n\nDamit wir die Folgen des Wandels in der Arbeitswelt gut bewältigen, plädieren Experten wie Oliver Suchy und Gerhard Braun dafür, die Weiterbildung nicht außer Acht zu lassen, eine „investive Arbeitsmarktpolitik“ zu betreiben.	2023-09-29 14:51:22.754776+00	2023-09-29 14:51:22.754797+00	f	Deutsche Wortschatz
+350	CONTEXT: postgres_user=postgres, postgres_database=postgres\r\n\r\nbackup: pg_dump -U postgres -F t postgres > postgres.tar\r\n\r\ndocker cp [container id] :/postgres.tar . (copy to current directory in current computer)\r\n\r\nkubectl cp ./postgres.tar [pod name]:/ (enter directory name in kubernetes pod)\r\n\r\nrestore: (Context: user postgres, database postgres)\r\npg_restore -U postgres -Ft -d postgres < postgres.tar	2023-10-28 12:01:41.136447+00	2023-10-28 12:01:41.136465+00	f	copy data from postgres in Docker to postgres in Kubernetes
+284	durchlesen: read through\n\nIch möchte meinen Aufsatz durchlesen und die Fehler korrigieren.	2023-09-26 10:55:31.762316+00	2023-09-26 10:55:31.762416+00	f	Deutsche Wortschatz
+286	die Auswirkung: impact, effect\n\nUsage: Auswirkung auf etwas haben	2023-09-26 11:13:20.774866+00	2023-09-26 11:13:20.77488+00	f	Deutsche Wortschatz
+348	kubectl create secret generic notetaking-secrets --from-env-file=notetakingdjango-secrets	2023-10-26 11:10:03.233254+00	2023-10-26 11:10:03.23327+00	f	create secret from env file Kubernetes
+\.
+
+
+--
+-- Name: notetaking_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notetaking_category_id_seq', 5, true);
+
+
+--
+-- Name: notetaking_categorynote_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notetaking_categorynote_id_seq', 8, true);
+
+
+--
+-- Name: notetaking_note_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notetaking_note_id_seq', 418, true);
+
+
+--
+-- Name: notetaking_note content_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_note
+    ADD CONSTRAINT content_unique UNIQUE (content);
+
+
+--
+-- Name: flyway_schema_history flyway_schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.flyway_schema_history
+    ADD CONSTRAINT flyway_schema_history_pk PRIMARY KEY (installed_rank);
+
+
+--
+-- Name: notetaking_category notetaking_category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_category
+    ADD CONSTRAINT notetaking_category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notetaking_category notetaking_category_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_category
+    ADD CONSTRAINT notetaking_category_title_key UNIQUE (title);
+
+
+--
+-- Name: notetaking_categorynote notetaking_categorynote_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_categorynote
+    ADD CONSTRAINT notetaking_categorynote_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notetaking_note notetaking_note_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_note
+    ADD CONSTRAINT notetaking_note_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: flyway_schema_history_s_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success);
+
+
+--
+-- Name: notetaking_category_title_0e048905_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX notetaking_category_title_0e048905_like ON public.notetaking_category USING btree (title varchar_pattern_ops);
+
+
+--
+-- Name: notetaking_categorynote_category_id_647301f2; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX notetaking_categorynote_category_id_647301f2 ON public.notetaking_categorynote USING btree (category_id);
+
+
+--
+-- Name: notetaking_categorynote_note_id_0e0d7ec8; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX notetaking_categorynote_note_id_0e0d7ec8 ON public.notetaking_categorynote USING btree (note_id);
+
+
+--
+-- Name: notetaking_categorynote notetaking_categoryn_category_id_647301f2_fk_notetakin; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_categorynote
+    ADD CONSTRAINT notetaking_categoryn_category_id_647301f2_fk_notetakin FOREIGN KEY (category_id) REFERENCES public.notetaking_category(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notetaking_categorynote notetaking_categorynote_note_id_0e0d7ec8_fk_notetaking_note_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notetaking_categorynote
+    ADD CONSTRAINT notetaking_categorynote_note_id_0e0d7ec8_fk_notetaking_note_id FOREIGN KEY (note_id) REFERENCES public.notetaking_note(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

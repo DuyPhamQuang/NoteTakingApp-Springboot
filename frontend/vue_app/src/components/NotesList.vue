@@ -108,7 +108,7 @@
               
               currentPage: 1,
               totalPages: 0,
-              pageSize: 12,
+              pageSize: 18,
 
               v$: useValidate(),
               newNote: {
