@@ -4,7 +4,7 @@ import pathlib
 
 # Database details
 DB_HOST = 'localhost'
-DB_PORT = '8003'
+DB_PORT = '5433'
 DB_USER = 'postgres'
 DB_PASS = 'postgres'
 DB_NAME = 'postgres'
