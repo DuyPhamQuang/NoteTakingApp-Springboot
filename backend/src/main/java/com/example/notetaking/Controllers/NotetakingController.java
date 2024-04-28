@@ -84,6 +84,4 @@ public class NotetakingController {
         noteService.deleteAllNotesByCustomQuery();
         return new ResponseEntity<String>("All Notes deleted successfully!.", HttpStatus.OK);
     }
-
-    //Category
 }
