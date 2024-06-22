@@ -51,7 +51,7 @@ public class NotetakingController {
             return new ResponseEntity<>(note, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+            }
     }
 
     @PostMapping("/addNote")
