@@ -1,5 +1,7 @@
 package com.example.notetaking.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "notetaking_category")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
