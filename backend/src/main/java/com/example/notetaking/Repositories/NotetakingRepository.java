@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository("NotetakingRepository")
-public interface NotetakingRepository extends JpaRepository<Note, Integer> {
+public interface NotetakingRepository extends SearchRepository<Note, Integer> {
     Page<Note> findByDeletedFalseOrderByCreatedtimeDesc(Pageable paging);
 
     Note findByIdAndDeleted(int id, boolean value);

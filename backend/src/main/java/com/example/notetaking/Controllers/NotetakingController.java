@@ -1,8 +1,14 @@
 package com.example.notetaking.Controllers;
 
+import com.example.notetaking.DTO.PageDTO;
+import com.example.notetaking.DTO.PageableSearchRequestDTO;
+import com.example.notetaking.DTO.SearchRequestDTO;
 import com.example.notetaking.Entity.Note;
+import com.example.notetaking.NotetakingApplication;
 import com.example.notetaking.Services.NoteServiceImpl;
 import com.example.notetaking.Services.NotetakingService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.message.DefaultFlowMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,19 +23,19 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/notetaking")
 @CrossOrigin
+@Slf4j
 public class NotetakingController {
     @Autowired
     private NoteServiceImpl noteService;
 
     @GetMapping("/")
     ResponseEntity<Map<String, Object>> getAllNotes(@RequestParam(defaultValue = "0") int page,
-                                                    @RequestParam(defaultValue = "12") int size) {
+                                                    @RequestParam(defaultValue = "18") int size) {
         try {
             List<Note> notes = new ArrayList<Note>();
             Pageable paging = PageRequest.of(page, size);
-            Page<Note> pageNotes;
 
-            pageNotes = noteService.findAllNotes(paging);
+            Page<Note> pageNotes = noteService.findAllNotes(paging);
             notes = pageNotes.getContent();
             Map<String, Object> response = new HashMap<>();
 
@@ -66,6 +72,7 @@ public class NotetakingController {
             Note savedNote = noteService.getNoteById(noteId);
             savedNote.setTitle(note.getTitle());
             savedNote.setContent(note.getContent());
+            savedNote.setCategories(note.getCategories());
             Note updatedNote = noteService.updateNote(savedNote);
             return new ResponseEntity<>(updatedNote, HttpStatus.OK);
         } catch (Exception ex) {
@@ -83,6 +90,21 @@ public class NotetakingController {
     public ResponseEntity<String> deleteAllNote() {
         noteService.deleteAllNotesByCustomQuery();
         return new ResponseEntity<String>("All Notes deleted successfully!.", HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchNotes(PageableSearchRequestDTO pageableSearchRequestDTO) {
+        try {
+            PageDTO<Note> searchedNotes = noteService.searchNotes(pageableSearchRequestDTO.getText(),
+                                                                  pageableSearchRequestDTO.getFields(),
+                                                                  pageableSearchRequestDTO.getLimit(),
+                                                                  pageableSearchRequestDTO.getPageOffset());
+
+
+            return new ResponseEntity<>(searchedNotes, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 }

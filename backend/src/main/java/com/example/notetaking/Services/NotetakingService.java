@@ -1,5 +1,6 @@
 package com.example.notetaking.Services;
 
+import com.example.notetaking.DTO.PageDTO;
 import com.example.notetaking.Entity.Note;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,5 @@ public interface NotetakingService {
     Note updateNote(Note updatedNote);
     void deleteNoteByCustomQuery(List<Integer> ids);
     void deleteAllNotesByCustomQuery();
+    PageDTO<Note> searchNotes(String text, List<String> fields, int limit, int pageOffset);
 }
