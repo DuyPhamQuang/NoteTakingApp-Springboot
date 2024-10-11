@@ -41,7 +41,7 @@ public class NotetakingServiceTest {
     public void setup(){
 
         note = new Note(1,"Test1","Test1",false,null);
-        Ctest = new Category(3, "CTest1", null);
+        Ctest = new Category(3, "CTest1", null,null);
     }
 
     //@Test

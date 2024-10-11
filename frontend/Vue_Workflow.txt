@@ -1,0 +1,1 @@
+main.js -> {App(root component), router} -> Components -> Services(axios-> http-common.js, DataServices) -> API from Backend

@@ -1,4 +1,14 @@
 <template>
+    <!-- Search bar -->
+    <div class="topnav">
+      <div class="search-container">
+        <form @submit.prevent="Search">
+          <input type="text" placeholder="Search.." v-model="SearchQueryParams">
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+
     <div style="margin-left: 2px">
       <router-link :to="'/notetaking/'" style="font-size:30px; margin-top: 30px; margin-left:270px; color:rgba(37, 37, 186, 0.988)">
         My Notes
@@ -15,7 +25,7 @@
           Go
         </button>
       </p>
-      
+     
       <!-- Add Notes Form  -->
       <div class="submit-form" id="addNote" style="margin-left: 270px; width: 940px">
         <button class="btn btn-primary btn-xs" @click="saveNote()">
@@ -110,13 +120,18 @@
               totalPages: 0,
               pageSize: 18,
 
+              SearchedFlag: false,
+
               v$: useValidate(),
               newNote: {
                 title: "",
                 content: "",
               },
+
+              SearchQueryParams: null,
+
               checkedNotes: [],
-              deletebox: null
+              deletebox: null,
             }
         },
 
@@ -153,7 +168,46 @@
 
           clickCallback(pageNum) {
             this.currentPage = pageNum;
-            this.getAllNotes();
+            if(this.SearchedFlag==true) {
+              this.Search();
+            } else {
+              this.getAllNotes();
+            }
+          },
+
+
+          getSearchParams(SearchQuery, currentPage) {
+            let params = {};
+
+            params["text"] = SearchQuery;
+            params["limit"] = 12;
+
+            let pageOffset = currentPage - 1;
+
+            if (currentPage >= 0) {
+              params["pageOffset"] = pageOffset;
+            }
+
+            return params
+          },
+
+          async Search() {
+            const params = this.getSearchParams(
+              this.SearchQueryParams,
+              this.currentPage
+            );
+
+            this.SearchedFlag = true;
+
+            await NoteDataService.search(params).then((response) => {
+              const { content, total} = response.data;
+              this.notes = content;
+              this.totalPages = Math.ceil(total/12);
+              console.log(this.notes);
+            })
+            .catch((error)=>{
+              console.log(error)
+            })
           },
 
           saveNote() {
@@ -219,6 +273,31 @@
 </script>
 
 <style scoped>
+    .topnav {
+    overflow: hidden;
+    background-color: #ffffff;
+    }
+
+    .topnav .search-container{
+      display: flex;
+      margin-left:930px;
+    }
+    
+    .topnav input[type=text] {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .topnav input[type=submit] {
+      background: #3280f4;
+      color: #ffffff;
+      font-size: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
     .grid-container {
       display: flex;
       flex-direction: row;

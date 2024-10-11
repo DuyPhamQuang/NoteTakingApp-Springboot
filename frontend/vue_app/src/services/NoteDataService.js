@@ -5,6 +5,10 @@ class NoteDataService {
     return http.get("/notetaking/", { params });
   }
 
+  search(params) {
+    return http.get("/notetaking/search", { params });
+  }
+
   get(id) {
     return http.get(`/notetaking/${id}`);
   }

@@ -22,13 +22,15 @@ public class Category {
     private Integer id;
     @Column(nullable = false, unique = false)
     private String title;
-
+    @Column(columnDefinition = "boolean default false", nullable = true)
+    private Boolean deleted;
     @ManyToMany(mappedBy = "categories")
     private Set<Note> notes;
 
-    public Category(Integer id, String title, Set<Note> notes) {
+    public Category(Integer id, String title, Boolean deleted, Set<Note> notes) {
         this.id = id;
         this.title = title;
+        this.deleted = deleted;
         this.notes = notes;
     }
 }
