@@ -34,12 +34,13 @@ services:
     build:
       context: frontend
       dockerfile: Dev.Dockerfile
-    container_name: NotetakingFrontendVue
+    container_name: NotetakingFrontendVueServedwithNginx
     ports:
-      - 8090:8080
+      - 8090:80
     volumes:
       - ./frontend/vue_app:/vue_app
       - /frontend/vue_app/node_modules
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
     networks:
