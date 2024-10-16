@@ -30,7 +30,7 @@ services:
       - spring-postgres
       - spring-vuejs
 
-  frontend:
+  frontendtest:
     build:
       context: frontend
       dockerfile: Dev.Dockerfile
@@ -39,7 +39,7 @@ services:
       - 8090:80
     volumes:
       - ./frontend/vue_app:/vue_app
-      - /frontend/vue_app/node_modules
+      #- /frontend/vue_app/node_modules
       - ./frontend/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
