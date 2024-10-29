@@ -80,13 +80,13 @@ public class NotetakingController {
         }
     }
 
-    @PutMapping("/delete/{ids}")
+    @PostMapping("/delete/{ids}")
     public ResponseEntity<String> deleteNote(@PathVariable() List<Integer> ids) {
         noteService.deleteNoteByCustomQuery(ids);
         return new ResponseEntity<String>("Notes deleted successfully!.", HttpStatus.OK);
     }
 
-    @PutMapping("/delete_all")
+    @PostMapping("/delete_all")
     public ResponseEntity<String> deleteAllNote() {
         noteService.deleteAllNotesByCustomQuery();
         return new ResponseEntity<String>("All Notes deleted successfully!.", HttpStatus.OK);

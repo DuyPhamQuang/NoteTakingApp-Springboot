@@ -3,7 +3,7 @@ package com.example.notetaking.DTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

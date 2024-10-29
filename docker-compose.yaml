@@ -30,13 +30,13 @@ services:
       - spring-postgres
       - spring-vuejs
 
-  frontendtest:
+  frontendtest2:
     build:
       context: frontend
       dockerfile: Dev.Dockerfile
-    container_name: NotetakingFrontendVueServedwithNginx
+    container_name: NotetakingFrontendVueServedwithNginx2
     ports:
-      - 8090:80
+      - 8090:81
     volumes:
       - ./frontend/vue_app:/vue_app
       #- /frontend/vue_app/node_modules
