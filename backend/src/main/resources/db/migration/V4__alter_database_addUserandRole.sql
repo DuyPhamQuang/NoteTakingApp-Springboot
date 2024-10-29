@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS users (
+
+id BIGSERIAL PRIMARY KEY,
+username varchar(20) UNIQUE NOT NULL,
+email varchar(50) UNIQUE NOT NULL,
+password CHAR(82) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS roles (
+
+id BIGSERIAL PRIMARY KEY,
+name varchar(10) NOT NULL
+);

@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prod": "vue-cli-service --mode prod build"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -13,10 +14,16 @@
     "@vuelidate/validators": "^2.0.4",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
     "vue": "^3.4.3",
     "vue-router": "^4.2.5",
+    "vee-validate": "^4.3.5",
+    "yup": "^0.32.9",
+    "vuex": "^4.0.0",
     "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {
