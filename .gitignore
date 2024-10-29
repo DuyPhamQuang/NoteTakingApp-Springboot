@@ -5,6 +5,9 @@ target/
 resource/
 !**/src/test/**/target/
 
+Backupdata/
+*.jpg
+
 ### STS ###
 .apt_generated
 .classpath
@@ -37,6 +40,3 @@ build/
 .mvn/
 mvnw.cmd
 mvnw
-
-Backupdata/
-17477980-spring-security-framework.jpg
