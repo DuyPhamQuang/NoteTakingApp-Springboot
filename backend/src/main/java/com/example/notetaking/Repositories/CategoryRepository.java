@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository("CategoryRepository")
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CategoryRepository extends SearchRepository<Category, Integer> {
     Category findByIdAndDeleted(int id, boolean value);
 
     @Modifying

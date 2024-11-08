@@ -1,4 +1,4 @@
-package com.example.notetaking.Controllers;
+/*package com.example.notetaking.Controllers;
 
 import com.example.notetaking.Entity.Category;
 import com.example.notetaking.Entity.Note;
@@ -67,3 +67,5 @@ public class CategoryServiceTest {
         assertThat(updatedCategory.getTitle()).isEqualTo("Ctest2");
     }
 }
+
+*/

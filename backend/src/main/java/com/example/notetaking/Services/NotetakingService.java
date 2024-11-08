@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface NotetakingService {
     Page<Note> findAllNotes(Pageable paging);
 
