@@ -8,9 +8,11 @@ Frontend: Vue js (deployed with Nginx)
 
 Database Migration: Flyway
 
-Supporting Pagination, Full-text search (using Hibernate Search), Jwt Authentication (using Spring Security), deleting multiple notes with checked box
+Unit testing with Junit and Mockito
 
-One can also add the notes to categories (right now only doable in backend)
+Supporting Full-text search (by integrating Hibernate Search), Pagination (for both main page and search results), Jwt authentication (using Spring security),  deleting multiple notes with checked box
+
+One can also add the notes to categories and implementing CRUD on the categories  (right now only doable in backend)
 
 Login:
 ![2024-10-31](https://github.com/user-attachments/assets/84efae6c-f047-486f-8171-6c4d1b1f661c)
